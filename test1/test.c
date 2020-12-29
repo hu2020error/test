@@ -1,53 +1,53 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include"TreeSearch.h"
+#include"BinarySearch.h"
+#include"Hash.h"
 
+int main()
+{
+int j , addr;
+HashTable H;
+Init(&H);
 
-typedef struct node{
-int id;
-int score;
-int rank;
-//char name[6];
-}Node;
+Pnode* root = (Pnode*)malloc(sizeof(Pnode));
+Datatype arr[7]={12,34,11,6,3,2,32};
 
-
-void save(Node *p){
-
-FILE *fp;
-char filename[30];
-printf("please input the filename\n");
-scanf("%s",filename);
-fp=fopen(filename,"a");
-
-
-p->id=1;
-p->score=2;
-p->rank=3;
-//p->name='qq';
-
-fprintf(fp,"%d %d %d ",p->id,p->score,p->rank);
-fclose(fp);
+for (j = 0; j<7; j++)
+{
+	Insert(&H, arr[j]);
 }
 
-void new1(Node *p){
-FILE *fp1;
-char filename[30];
-
-printf("please input the filename\n");
-scanf("%s",filename);
-fp1=fopen(filename,"r");
-if(fp1==NULL){
-printf("Can't find the file");
-exit(0);}
-while(!feof(fp1)){
-fscanf(fp1,"%d %d %d ",&p->id,&p->score,&p->rank);
-printf("%d\t%d\t%d\t",p->id,p->score,p->rank);}
-fclose(fp1);
+int i,s;
+printf("存储的元素\n");
+for(i=0; i<7 ;i++){
+printf("%d\t",arr[i]);
+insert(root, arr[i]);
 }
 
-int main(){
+printf("\n散列表元素显示\n");
+Result(&H);
 
+InsertSort(arr,7);
 
-Node *head=(Node*)malloc(sizeof(Node));
-//save(head);
-new1(head);
+Datatype locate;
+printf("\nplease input you want:");
+
+scanf("%d",&locate);
+s=BinarySearch1(arr, 7, locate);
+
+addr = Search(&H, locate);
+
+printf("the BinarySearch sort result is :%d\n",s);
+
+if (addr == -1)
+printf("元素不存在\n");
+	else
+printf("%d元素在表中的位置是:%d\n", locate,addr);
+
+Pnode *res;
+if((res = search(root, locate)) != NULL){
+printf("TreeSearch Finding the number:%d\n",*(res->key));
+}
+else
+	printf("the TreeSearch is not find\n");
+
 }
